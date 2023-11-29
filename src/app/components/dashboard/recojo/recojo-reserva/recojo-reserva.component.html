@@ -1,1 +1,64 @@
-<p>recojo-reserva works!</p>
+<div class="container">
+
+  <div class="row">
+
+    <div class="col-md-6 ">
+      <h5>Programar recojo </h5>
+      <form [formGroup]="formulario" (ngSubmit)="enviarFormulario()" class="form-container">
+        
+        <div class="col-md-12 custom-div-2">
+          <mat-form-field class="custom-mat-field col-4">
+            <mat-label>Código de Mascota</mat-label>
+            <input matInput formControlName="codigoMascota" >
+          </mat-form-field>
+          
+  
+          <mat-form-field class="custom-mat-field col-7">
+            <mat-label>Nombre de Mascota</mat-label>
+            <input matInput formControlName="nombreMascota" >
+          </mat-form-field>
+  
+
+        </div>
+        
+        <mat-form-field class="custom-mat-field">
+          <mat-label>Fecha de recojo</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="fechaRecojo" placeholder=""
+            [matDatepickerFilter]="filtroFecha" (dateInput)="agregarEvento($event)">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        
+
+        <mat-form-field class="custom-mat-select">
+          <mat-label>Tipo de Servicio</mat-label>
+          <mat-select class="custom-mat-option" formControlName="tipoServicio" placeholder="Seleccionar">
+            <mat-option class="custom-mat-option"  *ngFor="let tipo of tiposServicio" [value]="tipo" >{{ tipo }}</mat-option>
+          </mat-select>          
+        </mat-form-field>
+
+        <mat-form-field class="custom-mat-select">
+          <mat-label>Distrito de Cobertura</mat-label>
+          <mat-select class="custom-mat-option"  formControlName="distrito" placeholder="Seleccionar">
+            <mat-option class="custom-mat-option" *ngFor="let distrito of distritosCobertura" [value]="distrito">{{ distrito }}</mat-option>
+          </mat-select>          
+        </mat-form-field>
+        
+
+        <mat-form-field class="custom-mat-field">
+          <mat-label>Dirección</mat-label>
+          <input matInput formControlName="direccion" >
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit">Enviar</button>
+      </form>
+    </div>
+
+    <div class="col-md-6">
+      <div class="ctn-img">
+        <img src="assets/images/ft-recojo.jpg" alt="Imagen" class="img-fluid">
+      </div>            
+    </div>
+
+  </div>
+</div>

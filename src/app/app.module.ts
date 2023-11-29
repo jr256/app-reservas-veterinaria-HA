@@ -9,8 +9,12 @@ import { DashboardComponent } from './components//dashboard/dashboard.component'
 import { HomeComponent } from './components//dashboard/home/home.component';
 import { PageNotFoundComponent } from './components//page-not-found/page-not-found.component';
 import { ConsultaReservaComponent } from './components//dashboard/consulta/consulta-reserva/consulta-reserva.component';
+import { ConsultaDisponiblesComponent } from './components//dashboard/consulta/consulta-disponibles/consulta-disponibles.component';
 import { RecojoReservaComponent } from './components//dashboard/recojo/recojo-reserva/recojo-reserva.component';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -18,13 +22,15 @@ import { RouterModule } from '@angular/router';
     LoginComponent,
     DashboardComponent,
     HomeComponent,
-    PageNotFoundComponent,
-    ConsultaReservaComponent,
-    RecojoReservaComponent
+    RecojoReservaComponent,
+    ConsultaDisponiblesComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule,
     MaterialModule,
     RouterModule.forRoot([
       { path: 'login', component: LoginComponent },
@@ -32,7 +38,7 @@ import { RouterModule } from '@angular/router';
       { path: 'dashboard', component: DashboardComponent, 
       children:[
         { path: 'home', component: HomeComponent },
-        { path: 'consulta', component: ConsultaReservaComponent },
+        { path: 'consulta', component: ConsultaDisponiblesComponent },
         { path: 'recojo', component: RecojoReservaComponent },
       ]
     

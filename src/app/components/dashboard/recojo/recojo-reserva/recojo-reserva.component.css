@@ -1,0 +1,53 @@
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Ajustar estilos para los campos del formulario */
+  .form-container mat-form-field {
+    margin-bottom: 10px;
+  }
+  
+.ctn-img {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    height: 100%;
+}
+
+
+.custom-div-2{
+    display: flex;
+   
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
+
+}
+
+
+.ctn-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.mat-form-field-underline {
+    display: none;
+  }
+
+.custom-mat-field{
+    font-size: 14px;
+    height: 68px;
+}
+
+.custom-mat-select {
+    font-size: 14px;
+    height: 68px;
+}
+
+.custom-mat-option {
+    font-size: 14px;
+    
+  }
