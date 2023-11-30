@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { Servicio } from 'src/app/models/servicio.model';
+import { RecojoService } from 'src/app/services/recojo.service';
+import { ServicioService } from 'src/app/services/servicio.service';
 
 
 @Component({
@@ -9,6 +12,11 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
   styleUrls: ['./recojo-reserva.component.css']
 })
 export class RecojoReservaComponent {
+
+  servicioSeleccionadoId:number = -1;
+
+  servicio: Servicio[] = [];
+  distritosCobertura = ['San Miguel', 'Magdalena', 'Pueblo Libre', 'Jesús María', 'Lince', 'Breña', 'Cercado de Lima', 'San Isidro', 'Miraflores',  'San Martín de Porres', 'Los Olivos',  'Bellavista'];
 
  
   formulario = new FormGroup({
@@ -20,8 +28,19 @@ export class RecojoReservaComponent {
     direccion: new FormControl('', Validators.required),
   });
 
-  tiposServicio = ['Opción 1', 'Opción 2', 'Opción 3'];
-  distritosCobertura = ['San Miguel', 'Magdalena', 'Pueblo Libre', 'Jesús María', 'Lince', 'Breña', 'Cercado de Lima', 'San Isidro', 'Miraflores',  'San Martín de Porres', 'Los Olivos',  'Bellavista'];
+
+  constructor(
+    private servicioService:ServicioService, 
+    private recojoService:RecojoService){
+      
+       
+    this.servicioService.listarServicios().subscribe(
+              x => this.servicio = x
+      );
+
+  
+    }
+ 
 
   filtroFecha = (date: Date | null): boolean => {
     if (!date) {

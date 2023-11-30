@@ -1,8 +1,11 @@
+import { Especialidad } from "./especialidad.model";
+import { Sede } from "./sede.model";
+
 export class Consulta {
 
     idconsulta?:number;
-    idsede?:number;
-    idespecialidad?:number;
+    idsede?:Sede;
+    idespecialidad?:Especialidad;
     fecha?:string;
     idhora?:number;
     idveterinario?:number;

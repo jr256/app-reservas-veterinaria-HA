@@ -29,12 +29,13 @@
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
         
-
         <mat-form-field class="custom-mat-select">
           <mat-label>Tipo de Servicio</mat-label>
-          <mat-select class="custom-mat-option" formControlName="tipoServicio" placeholder="Seleccionar">
-            <mat-option class="custom-mat-option"  *ngFor="let tipo of tiposServicio" [value]="tipo" >{{ tipo }}</mat-option>
-          </mat-select>          
+          <mat-select [(value)]="servicioSeleccionadoId">
+            <mat-option *ngFor="let servicioItem of servicio" [value]="servicioItem.idservicio">
+              {{ servicioItem.servicio }}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
 
         <mat-form-field class="custom-mat-select">

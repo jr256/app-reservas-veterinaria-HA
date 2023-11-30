@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Consulta } from '../models/consulta.model';
 import { AppSettings } from '../app.settings';
-import { map } from "rxjs/operators";
+import { tap } from "rxjs/operators";
 
 
 const baseUrlUrlConsulta =  AppSettings.API_ENDPOINT + "/consulta";
@@ -17,14 +17,24 @@ export class ConsultaService {
 
   listarConsultasDisponibles(
     sede:number,
-    especialidad:number
+    especialidad:number,
+    fecha: Date
     ):Observable<Consulta[]>{
-
+      const fechaFormato = fecha.toISOString().split('T')[0];
      const params = new HttpParams()
-     .set("sede", sede.toString())
-     .set("especialidad", especialidad.toString());
+     .set("idsede", sede.toString())
+     .set("idespecialidad", especialidad.toString())
+     .set("fecha", fechaFormato);
 
-return  this.http.get<Consulta[]>(baseUrlUrlConsulta +"/disponibles", {params}); 
+     console.log("URL: " + baseUrlUrlConsulta);
+     console.log("Parameters: ", params.toString());
+
+ //return  this.http.get<Consulta[]>(baseUrlUrlConsulta +"/disponibles", {params});
+ 
+ return this.http.get<Consulta[]>(baseUrlUrlConsulta + "/disponibles", { params })
+        .pipe(
+            tap(data => console.log('API Response: ', data))
+        );
 }  
 
 }

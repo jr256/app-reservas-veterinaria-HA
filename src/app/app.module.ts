@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './components/angular-material/material/material.module';
@@ -31,10 +31,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
     MaterialModule,
     RouterModule.forRoot([
-      { path: 'login', component: LoginComponent },
-      
+      { path: 'login', component: LoginComponent },      
       { path: 'dashboard', component: DashboardComponent, 
       children:[
         { path: 'home', component: HomeComponent },
@@ -43,7 +43,7 @@ import { ReactiveFormsModule } from '@angular/forms';
       ]
     
     },
-    { path: '', redirectTo: '/login', pathMatch: 'full' },
+      { path: '', redirectTo: '/login', pathMatch: 'full' },
       { path: '**', component: PageNotFoundComponent },
     
    

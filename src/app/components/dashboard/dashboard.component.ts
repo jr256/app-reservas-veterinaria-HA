@@ -25,11 +25,11 @@ export class DashboardComponent {
   }
 
   onNavigateToMisConsultasPage(): void{
-    this.router.navigate(['consulta'], {relativeTo: this.route});
+    this.router.navigate(['recojo'], {relativeTo: this.route});
   }
 
   onNavigateToMisRecojosPage(): void{
-    this.router.navigate(['reserva'], {relativeTo: this.route});
+    this.router.navigate(['recojo'], {relativeTo: this.route});
   }
 
 

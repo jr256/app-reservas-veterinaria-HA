@@ -14,7 +14,7 @@ export class SedeService {
   constructor(private http: HttpClient) { }
 
   listarSedes(): Observable<Sede[]> {
-    return this.http.get<Sede[]>(baseUrlSede );
+    return this.http.get<Sede[]>(baseUrlSede);
   }
 
 }
