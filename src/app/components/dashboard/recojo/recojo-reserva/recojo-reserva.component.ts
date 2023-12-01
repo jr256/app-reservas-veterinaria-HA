@@ -7,6 +7,8 @@ import { Servicio } from 'src/app/models/servicio.model';
 import { DistritoService } from 'src/app/services/distrito.service';
 import { RecojoService } from 'src/app/services/recojo.service';
 import { ServicioService } from 'src/app/services/servicio.service';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -39,7 +41,7 @@ export class RecojoReservaComponent {
     distrito:{iddistrito:0, distrito:""},  
     fecha: "",
     direccion: "",
-    idmascota: 0
+    mascota:{idmascota:0}
 
 };
 
@@ -48,7 +50,9 @@ export class RecojoReservaComponent {
     private servicioService:ServicioService,
     private distritoService: DistritoService, 
     private recojoService:RecojoService,
-    private formBuilder : FormBuilder){
+    private formBuilder : FormBuilder,
+    private snackBar: MatSnackBar,
+    private router: Router){
       
        
       this.servicioService.listarServicios().subscribe(
@@ -82,7 +86,7 @@ export class RecojoReservaComponent {
   programarRecojo() {
     if (this.formularioRecojo.valid) {
       const recojo: Recojo = {
-        idmascota: Number(this.formularioRecojo.get('idMascota')?.value) || 0,        
+        mascota: { idmascota: Number(this.formularioRecojo.get('idMascota')?.value) || 0 },        
         fecha: this.formularioRecojo.get('fechaRecojo')?.value ? new Date(this.formularioRecojo.get('fechaRecojo')?.value as string).toISOString().split('T')[0] : '',
         servicio: { idservicio: Number(this.formularioRecojo.get('tipoServicio')?.value) || 0 },
         distrito: { iddistrito: Number(this.formularioRecojo.get('distrito')?.value) || 0 },
@@ -92,8 +96,13 @@ export class RecojoReservaComponent {
       this.recojoService.programarRecojo(recojo).subscribe(
         x => {
           console.log("Reserva realizada con exito");
-        }
-      );
+          this.formularioRecojo.reset();
+          this.snackBar.open('Reserva realizada con éxito', 'Cerrar', {
+            duration: 3000,
+          });
+          this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+            this.router.navigate(['/dashboard/recojo']);});
+        });
     } else {
       console.error('El formulario no es válido');
     }

@@ -1,4 +1,5 @@
 import { DistritoCobertura } from "./distritocobertura.model";
+import { Mascota } from "./mascota.model";
 import { Servicio } from "./servicio.model";
 
 export class Recojo {
@@ -8,6 +9,6 @@ export class Recojo {
     distrito?:DistritoCobertura;
     fecha?:string;
     direccion?:string;
-    idmascota?:number
+    mascota?:Mascota
     
 }
