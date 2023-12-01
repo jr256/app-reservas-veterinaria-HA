@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -8,8 +8,8 @@ import { Sede } from 'src/app/models/sede.model';
 import { ConsultaService } from 'src/app/services/consulta.service';
 import { EspecialidadService } from 'src/app/services/especialidad.service';
 import { SedeService } from 'src/app/services/sede.service';
-import { FormGroup, FormControl } from '@angular/forms';
-import { formatDate } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { ConsultaReservaComponent } from '../consulta-reserva/consulta-reserva.component';
 
 @Component({
   selector: 'app-consulta-disponibles',
@@ -23,9 +23,10 @@ export class ConsultaDisponiblesComponent {
 
    //Clase para la paginacion
    @ViewChild (MatPaginator, { static: true }) paginator!: MatPaginator;
+  
 
    //Cabecera
-   displayedColumns = ["Sede","Especialidad","Veterinario","Fecha","Hora"];
+   displayedColumns = ["Sede","Especialidad","Veterinario","Fecha","Hora", "Acciones"];
 
     sedeSeleccionadaId:number = -1;
     especialidadSeleccionadaId:number = -1;
@@ -37,6 +38,7 @@ export class ConsultaDisponiblesComponent {
 
     
   constructor(
+    private dialogService: MatDialog,
     private sedeService:SedeService, 
     private especialidadService:EspecialidadService , 
     private consultaService:ConsultaService){
@@ -80,9 +82,25 @@ export class ConsultaDisponiblesComponent {
     } else {
         // Manejar caso cuando no se ha seleccionado sede, especialidad o fecha
     }
-}
+  }
 
-  
+  refreshTable() {
+    this.listarConsultasDisponibles();
+  }
+
+  openUpdateDialog(obj:Consulta){
+    console.log(">>> openUpdateDialog  >>");
+    
+    const dialogRef = this.dialogService.open(ConsultaReservaComponent, {data:obj});
+    dialogRef.afterClosed().subscribe(result => {
+        console.log(">>> result >> " + result);
+        if (result === 1) {
+            this.refreshTable();
+        }
+    });
+
+
+  }
 
 
  

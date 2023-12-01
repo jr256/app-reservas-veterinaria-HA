@@ -3,13 +3,13 @@
   <div class="row">
 
     <div class="col-md-6 ">
-      <h5>Programar recojo </h5>
-      <form [formGroup]="formulario" (ngSubmit)="enviarFormulario()" class="form-container">
+      <h5 class="title-style">Programar recojo </h5>
+      <form [formGroup]="formularioRecojo" (ngSubmit)="programarRecojo()" class="form-container">
         
         <div class="col-md-12 custom-div-2">
           <mat-form-field class="custom-mat-field col-4">
             <mat-label>Código de Mascota</mat-label>
-            <input matInput formControlName="codigoMascota" >
+            <input matInput formControlName="idMascota" >
           </mat-form-field>
           
   
@@ -23,7 +23,7 @@
         
         <mat-form-field class="custom-mat-field">
           <mat-label>Fecha de recojo</mat-label>
-          <input matInput [matDatepicker]="picker" formControlName="fechaRecojo" placeholder=""
+          <input matInput [matDatepicker]="picker" formControlName="fechaRecojo" 
             [matDatepickerFilter]="filtroFecha" (dateInput)="agregarEvento($event)">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
@@ -31,7 +31,7 @@
         
         <mat-form-field class="custom-mat-select">
           <mat-label>Tipo de Servicio</mat-label>
-          <mat-select [(value)]="servicioSeleccionadoId">
+          <mat-select [(value)]="servicioSeleccionadoId" formControlName="tipoServicio">
             <mat-option *ngFor="let servicioItem of servicio" [value]="servicioItem.idservicio">
               {{ servicioItem.servicio }}
             </mat-option>
@@ -41,7 +41,8 @@
         <mat-form-field class="custom-mat-select">
           <mat-label>Distrito de Cobertura</mat-label>
           <mat-select class="custom-mat-option"  formControlName="distrito" placeholder="Seleccionar">
-            <mat-option class="custom-mat-option" *ngFor="let distrito of distritosCobertura" [value]="distrito">{{ distrito }}</mat-option>
+            <mat-option class="custom-mat-option" *ngFor="let distrito of distritosCobertura" [value]="distrito.iddistrito">
+              {{ distrito.distrito }}</mat-option>
           </mat-select>          
         </mat-form-field>
         

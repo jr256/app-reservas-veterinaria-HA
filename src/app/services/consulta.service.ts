@@ -6,7 +6,7 @@ import { AppSettings } from '../app.settings';
 import { tap } from "rxjs/operators";
 
 
-const baseUrlUrlConsulta =  AppSettings.API_ENDPOINT + "/consulta";
+const baseUrlConsulta =  AppSettings.API_ENDPOINT + "/consulta";
 
 @Injectable({
   providedIn: 'root'
@@ -26,15 +26,21 @@ export class ConsultaService {
      .set("idespecialidad", especialidad.toString())
      .set("fecha", fechaFormato);
 
-     console.log("URL: " + baseUrlUrlConsulta);
+     console.log("URL: " + baseUrlConsulta);
      console.log("Parameters: ", params.toString());
 
- //return  this.http.get<Consulta[]>(baseUrlUrlConsulta +"/disponibles", {params});
  
- return this.http.get<Consulta[]>(baseUrlUrlConsulta + "/disponibles", { params })
-        .pipe(
-            tap(data => console.log('API Response: ', data))
-        );
-}  
+ 
+    return this.http.get<Consulta[]>(baseUrlConsulta + "/disponibles", { params })
+            .pipe(
+                tap(data => console.log('API Response: ', data))
+            );
+      }
+      
+      
+    reservarConsulta(consulta: Consulta): Observable<any> {
+      console.log("API: Objeto",JSON.stringify(consulta));
+      return this.http.put(baseUrlConsulta + "/reservar", consulta);
+    }
 
 }

@@ -9,6 +9,9 @@
     margin-bottom: 10px;
   }
   
+.title-style{
+    margin-top: 16px;
+} 
 .ctn-img {
     display: flex;
     justify-content: center; 

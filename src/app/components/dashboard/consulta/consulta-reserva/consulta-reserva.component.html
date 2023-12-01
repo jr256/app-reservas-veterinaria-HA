@@ -1,1 +1,60 @@
-<p>consulta-reserva works!</p>
+<div class="row" style="margin: 5%">
+    
+    <form  class="mat-dialog-content"  id="idFormModalidad">
+        <mat-form-field class="col-md-4">
+            <mat-label>Sede</mat-label>
+            <input matInput [(ngModel)]="consulta.sede!.sede" name="sede"  readonly>
+        </mat-form-field>
+      
+        <mat-form-field class="col-md-4">
+            <mat-label>Especialidad</mat-label>
+            <input matInput [(ngModel)]="consulta.especialidad!.especialidad" name="especialidad"  readonly>
+        </mat-form-field>
+      
+        <mat-form-field class="col-md-4">
+            <mat-label>Veterinario</mat-label>
+            <input matInput [(ngModel)]="consulta.veterinario!.nombrecompleto" name="veterinario" readonly>
+        </mat-form-field>
+     
+      
+      <div class="row" style="margin-top: 5%">
+        <mat-form-field class="col-md-4">
+            <mat-label>Fecha</mat-label>
+            <input matInput [(ngModel)]="consulta.fecha" name="fecha"  type="date" readonly>
+        </mat-form-field>
+      
+        <mat-form-field class="col-md-4">
+            <mat-label>Hora</mat-label>
+            <input matInput [(ngModel)]="consulta.hora!.hora" name="hora" type="time" readonly>
+        </mat-form-field>
+
+
+        <mat-form-field class="col-md-4">
+            <mat-label>Id Mascota</mat-label>
+            <input matInput [(ngModel)]="consulta.idmascota" name="idmascota">
+        </mat-form-field>
+
+      </div>
+
+      <div  mat-dialog-actions>
+            <button mat-raised-button 
+                    type="submit" 
+                    (click) = "confirmarReserva()"
+                    color="primary" 
+                    
+                    [mat-dialog-close]="1">
+                    Confirmar Reserva
+            </button>
+            <button mat-raised-button 
+                    color="accent"
+                    (click)="onCancel()">
+                    Salir
+            </button>
+        </div>
+
+    
+
+
+</form>
+    
+  </div>

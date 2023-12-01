@@ -24,6 +24,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     HomeComponent,
     RecojoReservaComponent,
     ConsultaDisponiblesComponent,
+    ConsultaReservaComponent,
     PageNotFoundComponent
   ],
   imports: [
