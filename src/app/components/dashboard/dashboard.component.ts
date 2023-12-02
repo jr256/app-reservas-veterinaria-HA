@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,7 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class DashboardComponent {
 
-  constructor(private route: ActivatedRoute, private router: Router){
+  constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService){
 
   }
 
@@ -30,6 +31,10 @@ export class DashboardComponent {
 
   onNavigateToMisRecojosPage(): void{
     this.router.navigate(['recojo'], {relativeTo: this.route});
+  }
+
+  onLogout() {
+    this.authService.logout();
   }
 
 

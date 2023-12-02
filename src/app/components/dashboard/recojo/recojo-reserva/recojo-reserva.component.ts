@@ -9,6 +9,8 @@ import { RecojoService } from 'src/app/services/recojo.service';
 import { ServicioService } from 'src/app/services/servicio.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from 'src/app/services/auth.service';
+import { MascotaService } from 'src/app/services/mascota.service';
 
 
 @Component({
@@ -23,11 +25,10 @@ export class RecojoReservaComponent {
   servicio: Servicio[] = [];
   distritosCobertura: DistritoCobertura [] = [];
 
-
+  idmascota?: number;
 
   formularioRecojo = new FormGroup({
-    idMascota: new FormControl('', Validators.required),
-    nombreMascota: new FormControl('', Validators.required),
+  
     fechaRecojo: new FormControl('', Validators.required),
     tipoServicio: new FormControl('', Validators.required),
     distrito: new FormControl('', Validators.required),
@@ -42,6 +43,7 @@ export class RecojoReservaComponent {
     fecha: "",
     direccion: "",
     mascota:{idmascota:0}
+    //idmascota: 0
 
 };
 
@@ -51,6 +53,8 @@ export class RecojoReservaComponent {
     private distritoService: DistritoService, 
     private recojoService:RecojoService,
     private formBuilder : FormBuilder,
+    private authService: AuthService, 
+    private mascotaService: MascotaService,
     private snackBar: MatSnackBar,
     private router: Router){
       
@@ -65,6 +69,16 @@ export class RecojoReservaComponent {
 
   
     }
+
+    
+  ngOnInit() {
+    const username = this.authService.getUsername();
+    if (username) {
+      this.mascotaService.getMascotaByEmail(username).subscribe(mascota => {
+        this.idmascota = mascota.idmascota;
+      });
+    }
+  }
  
 
   filtroFecha = (date: Date | null): boolean => {
@@ -82,11 +96,11 @@ export class RecojoReservaComponent {
   }
 
 
-
   programarRecojo() {
     if (this.formularioRecojo.valid) {
       const recojo: Recojo = {
-        mascota: { idmascota: Number(this.formularioRecojo.get('idMascota')?.value) || 0 },        
+        mascota: { idmascota: this.idmascota || 0 },   
+        //idmascota: this.recojo.idmascota,     
         fecha: this.formularioRecojo.get('fechaRecojo')?.value ? new Date(this.formularioRecojo.get('fechaRecojo')?.value as string).toISOString().split('T')[0] : '',
         servicio: { idservicio: Number(this.formularioRecojo.get('tipoServicio')?.value) || 0 },
         distrito: { iddistrito: Number(this.formularioRecojo.get('distrito')?.value) || 0 },

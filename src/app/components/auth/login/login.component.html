@@ -1,40 +1,65 @@
-<div class="card">
-    <form [formGroup]="loginFormGroup" method="post">
-      <div class="card-body">
-        <div class="form-group">
-          <label class="text-muted">Email</label>
-          <input type="email" class="form-control form-font rounded-0 mt-1 mb-3"
-                 [ngClass]="{'is-invalid': submitted && loginFormGroup.controls['username'].errors}"
-                 formControlName="username">
-          <div *ngIf="submitted && loginFormGroup.get('username')?.errors" class="invalid-feedback">
-            <div *ngIf="loginFormGroup.get('username')!.errors?.['required']">
-              Email is Required
+<div class="container">
+
+  <!--Login -->
+  <div class="row">
+
+      <!--Login -->
+    <div class="col-md-6 ">
+        <h5 class="custom-titulo">Inicio de sesión</h5>
+      <div class="card">
+        <form [formGroup]="loginFormGroup" method="post">
+          <div class="card-body">
+            <div class="form-group">
+              <label class="text-muted">Email</label>
+              <input type="email" class="form-control form-font rounded-0 mt-1 mb-3"
+                     [ngClass]="{'is-invalid': submitted && loginFormGroup.controls['username'].errors}"
+                     formControlName="username">
+              <div *ngIf="submitted && loginFormGroup.get('username')?.errors" class="invalid-feedback">
+                <div *ngIf="loginFormGroup.get('username')!.errors?.['required']">
+                  El Email es requerido
+                </div>
+                <div *ngIf="loginFormGroup.get('username')!.errors?.['pattern']">
+                  Ingresa un Email valido
+                </div>
+              </div>
             </div>
-            <div *ngIf="loginFormGroup.get('username')!.errors?.['pattern']">
-              Please Enter a valid Email
+            <div class="form-group">
+              <label class="text-muted">Contraseña</label>
+              <input type="password" class="form-control form-font rounded-0 mt-1 mb-3"
+                     [ngClass]="{'is-invalid':submitted && loginFormGroup.controls['password'].errors}"
+                     formControlName="password">
+              <div *ngIf="submitted && loginFormGroup.get('password')?.errors" class="invalid-feedback">
+                <div *ngIf="loginFormGroup.get('password')!.errors?.['required']">
+                  La contraseña es requerida
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="form-group">
-          <label class="text-muted">Password</label>
-          <input type="password" class="form-control form-font rounded-0 mt-1 mb-3"
-                 [ngClass]="{'is-invalid':submitted && loginFormGroup.controls['password'].errors}"
-                 formControlName="password">
-          <div *ngIf="submitted && loginFormGroup.get('password')?.errors" class="invalid-feedback">
-            <div *ngIf="loginFormGroup.get('password')!.errors?.['required']">
-              Password is Required
-            </div>
+          <div class="card-footer">
+            <button type="button" (click)="onLogin()" class="btn btn-sm btn-primary">Ingresar</button>
           </div>
-        </div>
+        </form>
+        <ng-container *ngIf="errorMessage">
+          <div class="alert alert-danger">
+            {{errorMessage}}
+          </div>
+        </ng-container>
       </div>
-      <div class="card-footer">
-        <button type="button" (click)="onLogin()" class="btn btn-sm btn-primary">Login</button>
+ 
+    </div>
+
+    <!--Imagen -->
+    <div class="col-md-6 ">
+
+      <div class="ctn-img">
+        <img src="assets/images/ft-login.jpg" alt="Imagen" class="img-fluid">
       </div>
-    </form>
-    <ng-container *ngIf="errorMessage">
-      <div class="alert alert-danger">
-        {{errorMessage}}
-      </div>
-    </ng-container>
+
+    </div>
+     
+
+
   </div>
-  
+
+</div>
+

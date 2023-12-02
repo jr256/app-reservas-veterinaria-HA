@@ -9,6 +9,7 @@ export class Recojo {
     distrito?:DistritoCobertura;
     fecha?:string;
     direccion?:string;
-    mascota?:Mascota
+    mascota?:Mascota;
+    //idmascota?:number;
     
 }

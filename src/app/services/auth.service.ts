@@ -6,6 +6,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { AppSettings } from '../app.settings';
 import { LoggedUser } from '../models/logged-user.model';
 import { LoginRequest, LoginResponse } from '../models/login.model';
+import { Mascota } from '../models/mascota.model';
+import { MascotaService } from './mascota.service';
 
 
 @Injectable({
@@ -17,7 +19,7 @@ export class AuthService {
   user = new BehaviorSubject<LoggedUser | null>(null);
   tokenExpirationTimer: any;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private mascotaService: MascotaService) {}
 
   public login(user: LoginRequest): Observable<LoginResponse> {
     const formData = new FormData();
@@ -28,33 +30,59 @@ export class AuthService {
 
   saveToken(jwtTokens: LoginResponse) {
     const decodedAccessToken = this.jwtHelperService.decodeToken(jwtTokens.accessToken);
-    const loggedUser = new LoggedUser(decodedAccessToken.sub, decodedAccessToken.roles, jwtTokens.accessToken, this.getExpirationDate(decodedAccessToken.exp));
+    const loggedUser = new LoggedUser(decodedAccessToken.sub, decodedAccessToken.roles, jwtTokens.accessToken, this.getExpirationDate(decodedAccessToken.exp),undefined);
     this.user.next(loggedUser);
     this.autoLogout(this.getExpirationDate(decodedAccessToken.exp).valueOf() - new Date().valueOf());
     localStorage.setItem('userData', JSON.stringify(loggedUser));
 
-    this.redirectLoggedInUser(decodedAccessToken);
+    this.redirectLoggedInUser(decodedAccessToken, jwtTokens.accessToken);
   }
 
-  redirectLoggedInUser(decodedToken: any) {
+  redirectLoggedInUser(decodedToken: any, accessToken: string) {
     if (decodedToken.roles.includes("Admin")) this.router.navigateByUrl("/admin-dashboard");
-    else if (decodedToken.roles.includes("Customer")) this.router.navigateByUrl("/dashboard");
-  }
+    else if (decodedToken.roles.includes("Customer")) 
+    this.mascotaService.getMascotaByEmail(decodedToken.sub).subscribe(
+      mascota => { 
+        const loggedUser = new LoggedUser(decodedToken.sub, decodedToken.roles, accessToken, this.getExpirationDate(decodedToken.exp), mascota);
+        this.user.next(loggedUser);
+        localStorage.setItem('userData', JSON.stringify(loggedUser));
+        this.router.navigateByUrl("/dashboard");
+  })}
 
   autoLogin() {
     const userData: {
       username: string,
       roles: string[],
       _token: string,
-      _expiration: Date
+      _expiration: Date,
+      mascota: Mascota | undefined,
     } = JSON.parse(localStorage.getItem('userData')!);
     if (!userData) return;
-    const loadedUser = new LoggedUser(userData.username, userData.roles, userData._token, new Date(userData._expiration));
+    const loadedUser = new LoggedUser(userData.username, userData.roles, userData._token, new Date(userData._expiration), userData.mascota);
     if (loadedUser.token) {
       this.user.next(loadedUser);
       this.autoLogout(loadedUser._expiration.valueOf() - new Date().valueOf());
     }
   }
+
+
+  refreshMascota() {
+    const userData: {
+      username: string,
+      roles: string[],
+      _token: string,
+      _expiration: Date,
+      mascota: Mascota | undefined,
+    } = JSON.parse(localStorage.getItem('userData')!);
+    if (!userData) return;
+    const loadedUser = new LoggedUser(userData.username, userData.roles, userData._token, new Date(userData._expiration), userData.mascota);
+    if (loadedUser.token) {
+      this.user.next(loadedUser);
+      this.autoLogout(loadedUser._expiration.valueOf() - new Date().valueOf());
+    }
+  }
+
+
 
   getToken(): string | null {
     const user = this.user.value;
@@ -83,6 +111,14 @@ export class AuthService {
     }, expirationDuration);
   }
   
-
+  getUsername(): string | null {
+    const userData: {
+      username: string,
+      roles: string[],
+      _token: string,
+      _expiration: Date
+    } = JSON.parse(localStorage.getItem('userData')!);
+    return userData ? userData.username : null;
+  }
 
 }

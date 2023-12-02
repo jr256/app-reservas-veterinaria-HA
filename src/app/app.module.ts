@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './components/angular-material/material/material.module';
@@ -20,6 +20,7 @@ import { UsuariosComponent } from './components/admin-dashboard/usuarios/usuario
 import { ReporteConsultasComponent } from './components/admin-dashboard/reportes/reporte-consultas/reporte-consultas.component';
 import { ReporteRecojosComponent } from './components/admin-dashboard/reportes/reporte-recojos/reporte-recojos.component';
 import { AuthGuardService } from './services/auth-guard.service';
+import { AuthInterceptorService } from './services/auth.interceptor.service';
 
 
 @NgModule({
@@ -67,7 +68,11 @@ import { AuthGuardService } from './services/auth-guard.service';
    
     ])
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptorService,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

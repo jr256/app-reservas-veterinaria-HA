@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -13,6 +13,9 @@ import { formatDate } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { AuthService } from 'src/app/services/auth.service';
+import { MascotaService } from 'src/app/services/mascota.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -20,7 +23,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   templateUrl: './consulta-reserva.component.html',
   styleUrls: ['./consulta-reserva.component.css']
 })
-export class ConsultaReservaComponent {
+export class ConsultaReservaComponent implements OnInit {
 
   formsRegistra = this.formBuilder.group({ 
     idespecialidad: [''],
@@ -49,7 +52,10 @@ export class ConsultaReservaComponent {
     ,private dialogService: MatDialog,
     private sedeService:SedeService, 
     private especialidadService:EspecialidadService , 
+    private authService: AuthService, 
+    private mascotaService: MascotaService,
     private consultaService:ConsultaService,
+    private snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<ConsultaReservaComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
     ){
@@ -67,6 +73,15 @@ export class ConsultaReservaComponent {
 
   }
 
+  ngOnInit() {
+    const username = this.authService.getUsername();
+    if (username) {
+      this.mascotaService.getMascotaByEmail(username).subscribe(mascota => {
+        this.consulta.idmascota = mascota.idmascota;
+      });
+    }
+  }
+
   confirmarReserva() {
     if (this.consulta && this.consulta.sede && this.consulta.especialidad && this.consulta.hora && this.consulta.veterinario) {
       const consultaToSend = {
@@ -82,6 +97,9 @@ export class ConsultaReservaComponent {
   
       this.consultaService.reservarConsulta(consultaToSend).subscribe(
         x => {
+          this.snackBar.open('Reserva realizada con éxito', 'Cerrar', {
+            duration: 3000,
+          });
           console.log("Reserva realizada con exito");
           this.dialogRef.close();
         }

@@ -1,6 +1,23 @@
+
+
 .card {
-    margin: 300px auto;
-    width: 600px;
+    margin: 80px auto;
+    width: 400px;
     padding: 10px;
   }
   
+  .ctn-img {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    height: 100%;
+    
+}
+
+.custom-titulo{
+    font-size: 30px;
+   
+    text-align: center;
+    margin-top: 60px;
+}
+

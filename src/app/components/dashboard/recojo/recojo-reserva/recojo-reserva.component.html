@@ -9,16 +9,9 @@
         <div class="col-md-12 custom-div-2">
           <mat-form-field class="custom-mat-field col-4">
             <mat-label>Código de Mascota</mat-label>
-            <input matInput formControlName="idMascota" >
+            <input matInput  [value]="idmascota" readonly id="idMascota">
           </mat-form-field>
           
-  
-          <mat-form-field class="custom-mat-field col-7">
-            <mat-label>Nombre de Mascota</mat-label>
-            <input matInput formControlName="nombreMascota" >
-          </mat-form-field>
-  
-
         </div>
         
         <mat-form-field class="custom-mat-field">

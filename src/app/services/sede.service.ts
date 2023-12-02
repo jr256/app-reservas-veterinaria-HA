@@ -3,8 +3,6 @@ import { Injectable } from '@angular/core';
 import { Sede } from '../models/sede.model';
 import { AppSettings } from '../app.settings';
 import { Observable } from 'rxjs';
-import { HttpHeaders } from '@angular/common/http';
-import { AuthService } from './auth.service';
 
 const baseUrlSede =  AppSettings.API_ENDPOINT + "/sede";
 
@@ -13,15 +11,12 @@ const baseUrlSede =  AppSettings.API_ENDPOINT + "/sede";
 })
 export class SedeService {
 
-  constructor(private http: HttpClient, private authService: AuthService) { }
+  constructor(private http: HttpClient) { }
 
   listarSedes(): Observable<Sede[]> {
 
-    const headers = new HttpHeaders({
-      'Authorization': 'Bearer ' + this.authService.getToken() 
-    });
 
-    return this.http.get<Sede[]>(baseUrlSede, { headers: headers });
+    return this.http.get<Sede[]>(baseUrlSede);
   }
 
 }
