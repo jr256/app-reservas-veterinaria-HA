@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Mascota } from '../models/mascota.model';
 import { AppSettings } from '../app.settings';
+import {PageResponse} from '../models/page.response.model';
 
 const baseUrlMascota =  AppSettings.API_ENDPOINT + "/mascota";
 
@@ -20,4 +21,13 @@ export class MascotaService {
     return this.http.get<Mascota>(url);
 
   }
+
+  saveMascota(mascota: Mascota): Observable<Mascota> {
+    return this.http.post<Mascota>(baseUrlMascota + "/save", mascota);
+  }
+
+  searchMascotas(keyword: string,  currentPage: number, pageSize: number): Observable<PageResponse<Mascota>>  {
+   return this.http.get<PageResponse<Mascota>>(baseUrlMascota + "/search?keyword=" + keyword + "&page=" + currentPage + "&size=" + pageSize);
+  }
+
 }

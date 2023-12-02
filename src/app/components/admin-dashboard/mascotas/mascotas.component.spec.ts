@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UsuariosComponent } from './usuarios.component';
+import { MascotasComponent } from './mascotas.component';
 
-describe('UsuariosComponent', () => {
-  let component: UsuariosComponent;
-  let fixture: ComponentFixture<UsuariosComponent>;
+describe('MascotasComponent', () => {
+  let component: MascotasComponent;
+  let fixture: ComponentFixture<MascotasComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [UsuariosComponent]
+      declarations: [MascotasComponent]
     });
-    fixture = TestBed.createComponent(UsuariosComponent);
+    fixture = TestBed.createComponent(MascotasComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

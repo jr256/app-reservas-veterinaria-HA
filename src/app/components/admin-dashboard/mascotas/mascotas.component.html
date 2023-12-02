@@ -1,0 +1,40 @@
+<div class="box-content">
+  <ng-container *ngIf="pageMascotas | async as page; else failureOrLoading">
+    <table class="table table-striped table-hover" style="width:100%">
+      <thead>
+        <tr>
+          <th>ID Mascota</th>
+          <th>Nombre Mascota</th>
+          <th>Nombre Propietario</th>
+          <th>Email Usuario</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let m of page.content">
+          <td>{{m.idmascota}}</td>
+          <td>{{m.nombremascota}}</td>
+          <td>{{m.nombrepropietario}}</td>
+          <td>{{m.user?.email}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <mat-paginator [length]="page.totalPages" [pageSize]="page.size" [pageIndex]="page.number" (page)="handlePage($event)">
+    </mat-paginator>
+  </ng-container>
+  <ng-template #failureOrLoading>
+    <div>Loading...</div>
+  </ng-template>
+</div>
+
+<!-- Modal -->
+<ng-template #modalContent>
+  <div mat-dialog-content>
+    <form [formGroup]="mascotaFormGroup" (ngSubmit)="onSaveMascota()">
+      <!-- Form fields go here -->
+    </form>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="onCloseModal()">Close</button>
+    <button mat-button cdkFocusInitial (click)="onSaveMascota()">Save</button>
+  </div>
+</ng-template>

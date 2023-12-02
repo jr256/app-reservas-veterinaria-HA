@@ -16,11 +16,12 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
-import { UsuariosComponent } from './components/admin-dashboard/usuarios/usuarios.component';
+
 import { ReporteConsultasComponent } from './components/admin-dashboard/reportes/reporte-consultas/reporte-consultas.component';
 import { ReporteRecojosComponent } from './components/admin-dashboard/reportes/reporte-recojos/reporte-recojos.component';
 import { AuthGuardService } from './services/auth-guard.service';
 import { AuthInterceptorService } from './services/auth.interceptor.service';
+import { MascotasComponent } from './components/admin-dashboard/mascotas/mascotas.component';
 
 
 @NgModule({
@@ -34,7 +35,7 @@ import { AuthInterceptorService } from './services/auth.interceptor.service';
     ConsultaReservaComponent,
     PageNotFoundComponent,
     AdminDashboardComponent,
-    UsuariosComponent,
+    MascotasComponent,    
     ReporteConsultasComponent,
     ReporteRecojosComponent
   ],
@@ -57,7 +58,7 @@ import { AuthInterceptorService } from './services/auth.interceptor.service';
     }, 
       { path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [AuthGuardService], data: {role: 'Admin'},
       children:[
-        { path: 'usuarios', component: UsuariosComponent },
+        { path: 'mascotas', component: MascotasComponent },
         { path: 'reporte-consultas', component: ReporteConsultasComponent },
         { path: 'reporte-recojos', component: ReporteRecojosComponent },
       ] },

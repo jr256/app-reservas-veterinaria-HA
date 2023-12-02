@@ -1,1 +1,11 @@
-<p>admin-dashboard works!</p>
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+     
+      <h1>Hurón Azul</h1>
+      <button mat-button (click)="onNavigateToMascotasPage()" >Mascotas</button>
+     
+
+      <button mat-button (click)="onLogout()">Cerrar sesión</button>           
+    </mat-toolbar-row>
+</mat-toolbar>
+<router-outlet></router-outlet>
