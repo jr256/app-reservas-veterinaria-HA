@@ -1,40 +1,52 @@
-<div class="box-content">
-  <ng-container *ngIf="pageMascotas | async as page; else failureOrLoading">
-    <table class="table table-striped table-hover" style="width:100%">
-      <thead>
-        <tr>
-          <th>ID Mascota</th>
-          <th>Nombre Mascota</th>
-          <th>Nombre Propietario</th>
-          <th>Email Usuario</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let m of page.content">
-          <td>{{m.idmascota}}</td>
-          <td>{{m.nombremascota}}</td>
-          <td>{{m.nombrepropietario}}</td>
-          <td>{{m.user?.email}}</td>
-        </tr>
-      </tbody>
-    </table>
-    <mat-paginator [length]="page.totalPages" [pageSize]="page.size" [pageIndex]="page.number" (page)="handlePage($event)">
-    </mat-paginator>
-  </ng-container>
-  <ng-template #failureOrLoading>
-    <div>Loading...</div>
-  </ng-template>
-</div>
+<div class="container">
 
-<!-- Modal -->
-<ng-template #modalContent>
-  <div mat-dialog-content>
-    <form [formGroup]="mascotaFormGroup" (ngSubmit)="onSaveMascota()">
-      <!-- Form fields go here -->
-    </form>
+
+  <div class="row">
+    
+    <div class="col-md-12">
+      <div class="col-md-6 custom-ff" >
+        <h5 class="title-style">Registrar Mascota</h5>
+        <form [formGroup]="formularioMascota" (ngSubmit)="onSaveMascota()" class="form-container">
+          
+    
+          <mat-form-field class=" col-md-12 custom-mat-field">
+            <mat-label>Nombre de Mascota</mat-label>
+            <input matInput formControlName="nombremascota">
+          </mat-form-field>
+
+
+          <mat-form-field class=" col-md-12 custom-mat-field">
+            <mat-label>Nombre de Propietario</mat-label>
+            <input matInput formControlName="nombrepropietario">
+          </mat-form-field>
+
+          <div formGroupName="user">
+            <mat-form-field class="custom-mat-field col-md-12">
+              <mat-label>Email</mat-label>
+              <input matInput formControlName="email">
+            </mat-form-field>
+            <mat-form-field class="custom-mat-field col-md-12">
+              <mat-label>Password</mat-label>
+              <input matInput type="password" formControlName="password">
+            </mat-form-field>
+          </div>
+
+
+          <button mat-raised-button color="primary" type="submit">Registrar</button>
+
+
+        </form>
+      </div>
+
+      
+
+    </div>
+  
+
+
+   
+
   </div>
-  <div mat-dialog-actions>
-    <button mat-button (click)="onCloseModal()">Close</button>
-    <button mat-button cdkFocusInitial (click)="onSaveMascota()">Save</button>
-  </div>
-</ng-template>
+
+
+</div>

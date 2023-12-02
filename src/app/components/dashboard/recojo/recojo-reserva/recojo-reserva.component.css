@@ -4,7 +4,7 @@
     flex-direction: column;
   }
   
-  /* Ajustar estilos para los campos del formulario */
+  
   .form-container mat-form-field {
     margin-bottom: 10px;
   }
