@@ -15,6 +15,12 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 
+import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
+import { UsuariosComponent } from './components/admin-dashboard/usuarios/usuarios.component';
+import { ReporteConsultasComponent } from './components/admin-dashboard/reportes/reporte-consultas/reporte-consultas.component';
+import { ReporteRecojosComponent } from './components/admin-dashboard/reportes/reporte-recojos/reporte-recojos.component';
+import { AuthGuardService } from './services/auth-guard.service';
+
 
 @NgModule({
   declarations: [
@@ -25,7 +31,11 @@ import { ReactiveFormsModule } from '@angular/forms';
     RecojoReservaComponent,
     ConsultaDisponiblesComponent,
     ConsultaReservaComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    AdminDashboardComponent,
+    UsuariosComponent,
+    ReporteConsultasComponent,
+    ReporteRecojosComponent
   ],
   imports: [
     BrowserModule,
@@ -36,14 +46,21 @@ import { ReactiveFormsModule } from '@angular/forms';
     MaterialModule,
     RouterModule.forRoot([
       { path: 'login', component: LoginComponent },      
-      { path: 'dashboard', component: DashboardComponent, 
+      { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuardService], data: {role: 'Customer'},
       children:[
         { path: 'home', component: HomeComponent },
         { path: 'consulta', component: ConsultaDisponiblesComponent },
         { path: 'recojo', component: RecojoReservaComponent },
       ]
     
-    },
+    }, 
+      { path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [AuthGuardService], data: {role: 'Admin'},
+      children:[
+        { path: 'usuarios', component: UsuariosComponent },
+        { path: 'reporte-consultas', component: ReporteConsultasComponent },
+        { path: 'reporte-recojos', component: ReporteRecojosComponent },
+      ] },
+      
       { path: '', redirectTo: '/login', pathMatch: 'full' },
       { path: '**', component: PageNotFoundComponent },
     

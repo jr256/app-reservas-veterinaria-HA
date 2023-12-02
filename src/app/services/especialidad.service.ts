@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { AppSettings } from '../app.settings';
 import { Observable } from 'rxjs';
 import { Especialidad } from '../models/especialidad.model';
+import { AuthService } from './auth.service';
+import { HttpHeaders } from '@angular/common/http';
 
 
 const baseUrlEspecialidad =  AppSettings.API_ENDPOINT + "/especialidad";
@@ -13,9 +15,14 @@ const baseUrlEspecialidad =  AppSettings.API_ENDPOINT + "/especialidad";
 export class EspecialidadService {
 
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService: AuthService) { }
 
   listarEspecialidades(): Observable<Especialidad[]> {
-    return this.http.get<Especialidad[]>(baseUrlEspecialidad );
+
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + this.authService.getToken() 
+    });
+
+    return this.http.get<Especialidad[]>(baseUrlEspecialidad , { headers: headers });
   }
 }

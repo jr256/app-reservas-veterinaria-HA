@@ -1,9 +1,6 @@
-.login-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;    
-}
-.login-form{
-    width: 250px;
-}
+.card {
+    margin: 300px auto;
+    width: 600px;
+    padding: 10px;
+  }
+  

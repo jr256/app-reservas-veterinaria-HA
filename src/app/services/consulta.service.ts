@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Consulta } from '../models/consulta.model';
 import { AppSettings } from '../app.settings';
 import { tap } from "rxjs/operators";
+import { AuthService } from './auth.service';
 
 
 const baseUrlConsulta =  AppSettings.API_ENDPOINT + "/consulta";
@@ -13,7 +14,7 @@ const baseUrlConsulta =  AppSettings.API_ENDPOINT + "/consulta";
 })
 export class ConsultaService {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient, private authService: AuthService) { }
 
   listarConsultasDisponibles(
     sede:number,
@@ -26,12 +27,18 @@ export class ConsultaService {
      .set("idespecialidad", especialidad.toString())
      .set("fecha", fechaFormato);
 
+
+     //Captura de token
+     const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + this.authService.getToken() 
+    });
+
      console.log("URL: " + baseUrlConsulta);
      console.log("Parameters: ", params.toString());
 
  
  
-    return this.http.get<Consulta[]>(baseUrlConsulta + "/disponibles", { params })
+    return this.http.get<Consulta[]>(baseUrlConsulta + "/disponibles", { params,  headers })
             .pipe(
                 tap(data => console.log('API Response: ', data))
             );
@@ -39,8 +46,17 @@ export class ConsultaService {
       
       
     reservarConsulta(consulta: Consulta): Observable<any> {
+
+
       console.log("API: Objeto",JSON.stringify(consulta));
-      return this.http.put(baseUrlConsulta + "/reservar", consulta);
+
+
+      //Captura de token
+      const headers = new HttpHeaders({
+        'Authorization': 'Bearer ' + this.authService.getToken() 
+      });
+
+      return this.http.put(baseUrlConsulta + "/reservar", consulta, { headers });
     }
 
 }
