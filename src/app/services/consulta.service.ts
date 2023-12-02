@@ -48,4 +48,30 @@ export class ConsultaService {
       return this.http.put(baseUrlConsulta + "/reservar", consulta);
     }
 
+
+    listarConsultasReservas(
+      sede:number,
+      especialidad:number,
+      fecha: Date
+      ):Observable<Consulta[]>{
+        const fechaFormato = fecha.toISOString().split('T')[0];
+       const params = new HttpParams()
+       .set("idsede", sede.toString())
+       .set("idespecialidad", especialidad.toString())
+       .set("fecha", fechaFormato);
+  
+  
+  
+       console.log("URL: " + baseUrlConsulta);
+       console.log("Parameters: ", params.toString());
+  
+   
+   
+      return this.http.get<Consulta[]>(baseUrlConsulta + "/reservadas", { params })
+              .pipe(
+                  tap(data => console.log('API Response: ', data))
+              );
+        }
+
+
 }

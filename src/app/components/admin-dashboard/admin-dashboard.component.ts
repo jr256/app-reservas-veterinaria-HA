@@ -17,6 +17,15 @@ export class AdminDashboardComponent {
     this.router.navigate(['mascotas'], {relativeTo: this.route});
   }
 
+
+  onNavigateToReporteConsultasPage(): void{
+    this.router.navigate(['reporte-consultas'], {relativeTo: this.route});
+  }
+
+  onNavigateToReporteRecojosPage(): void{
+    this.router.navigate(['reporte-recojos'], {relativeTo: this.route});
+  }
+
   onLogout() {
     this.authService.logout();
   }
