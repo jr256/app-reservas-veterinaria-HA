@@ -100,7 +100,7 @@ export class RecojoReservaComponent {
     if (this.formularioRecojo.valid) {
       const recojo: Recojo = {
         mascota: { idmascota: this.idmascota || 0 },   
-        //idmascota: this.recojo.idmascota,     
+            
         fecha: this.formularioRecojo.get('fechaRecojo')?.value ? new Date(this.formularioRecojo.get('fechaRecojo')?.value as string).toISOString().split('T')[0] : '',
         servicio: { idservicio: Number(this.formularioRecojo.get('tipoServicio')?.value) || 0 },
         distrito: { iddistrito: Number(this.formularioRecojo.get('distrito')?.value) || 0 },
